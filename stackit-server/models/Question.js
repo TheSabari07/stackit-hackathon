@@ -1,5 +1,23 @@
 import mongoose from "mongoose";
 
+const answerSchema = new mongoose.Schema(
+  {
+    content: {
+      type: String,
+      required: true,
+    },
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+  { _id: false }
+);
+
 const questionSchema = new mongoose.Schema(
   {
     title: {
@@ -18,6 +36,7 @@ const questionSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    answers: [answerSchema],
   },
   {
     timestamps: true,

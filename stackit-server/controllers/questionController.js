@@ -32,3 +32,4 @@ export const askQuestion = async (req, res) => {
     res.status(500).json({ message: "Failed to post question." });
   }
 };
+
