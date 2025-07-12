@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AskQuestion from "./pages/AskQuestion"; 
+import QuestionDetail from "./pages/QuestionDetail";
 
 import Navbar from "./components/Navbar";
 
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/ask" element={<AskQuestion />} />
+        <Route path="/question/:id" element={<QuestionDetail />} />
       </Routes>
     </BrowserRouter>
   );
