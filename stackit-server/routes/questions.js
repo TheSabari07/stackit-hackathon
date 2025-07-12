@@ -1,6 +1,6 @@
 import express from "express";
 import { askQuestion, getAllQuestions } from "../controllers/questionController.js";
-import auth from "../middlewares/auth.js";
+import auth from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
