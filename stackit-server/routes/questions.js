@@ -1,10 +1,10 @@
 import express from "express";
-import { getAllQuestions, askQuestion } from "../controllers/questionController.js";
-import { protect } from "../middleware/authMiddleware.js";
+import { askQuestion, getAllQuestions } from "../controllers/questionController.js";
+import auth from "../middlewares/auth.js";
 
 const router = express.Router();
 
 router.get("/", getAllQuestions);
-router.post("/", protect, askQuestion); 
+router.post("/", auth, askQuestion);
 
 export default router;
