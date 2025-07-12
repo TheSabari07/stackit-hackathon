@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import axios from "../utils/axios";
 
 export default function Login() {
@@ -11,38 +12,51 @@ export default function Login() {
     try {
       const res = await axios.post("/auth/login", form);
       localStorage.setItem("token", res.data.token);
-      alert("Login successful!");
+      toast.success("Login successful!");
       navigate("/");
     } catch (err) {
-      alert(err.response?.data?.message || "Login failed");
+      toast.error(err.response?.data?.message || "Login failed");
     }
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 mt-10 border rounded shadow">
-      <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="email"
-          placeholder="Email"
-          className="w-full border px-3 py-2 rounded"
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-full border px-3 py-2 rounded"
-          onChange={(e) => setForm({ ...form, password: e.target.value })}
-          required
-        />
-        <button
-          type="submit"
-          className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded"
-        >
-          Login
-        </button>
-      </form>
+    <div className="max-w-md mx-auto min-h-screen flex items-center justify-center">
+      <div className="w-full p-8 bg-white dark:bg-gray-800 rounded-xl shadow-xl">
+        <h2 className="text-3xl font-bold text-center text-blue-700 dark:text-blue-400 mb-8">
+          Welcome Back
+        </h2>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label className="block mb-1 font-medium text-gray-700 dark:text-gray-200">Email</label>
+            <input
+              type="email"
+              placeholder="you@example.com"
+              className="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-900 dark:text-white"
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block mb-1 font-medium text-gray-700 dark:text-gray-200">Password</label>
+            <input
+              type="password"
+              placeholder="••••••••"
+              className="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-900 dark:text-white"
+              onChange={(e) => setForm({ ...form, password: e.target.value })}
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-3 rounded-lg hover:opacity-90 transition duration-200 shadow-md"
+          >
+            Log In
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
