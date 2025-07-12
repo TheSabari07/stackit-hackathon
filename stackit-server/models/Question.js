@@ -14,6 +14,11 @@ const answerSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    votes: {
+      type: Map,
+      of: Number, 
+      default: {},
+    },
   },
   { _id: false }
 );
@@ -36,7 +41,7 @@ const questionSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-    answers: [answerSchema],
+    answers: [answerSchema], 
   },
   {
     timestamps: true,
