@@ -6,15 +6,20 @@ import axios from "../utils/axios";
 export default function Register() {
   const navigate = useNavigate();
   const [form, setForm] = useState({ username: "", email: "", password: "" });
+  const [formError, setFormError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setFormError(""); 
+
     try {
       await axios.post("/auth/register", form);
       toast.success("Registered successfully! Please log in.");
       navigate("/login");
     } catch (err) {
-      toast.error(err.response?.data?.message || "Registration failed");
+      const msg = err.response?.data?.message || "Registration failed";
+      setFormError(msg);
+      toast.error(msg);
     }
   };
 
@@ -24,6 +29,7 @@ export default function Register() {
         <h2 className="text-3xl font-bold text-center mb-6 text-blue-700 dark:text-blue-400">
           Register for StackIt
         </h2>
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
@@ -46,6 +52,13 @@ export default function Register() {
             onChange={(e) => setForm({ ...form, password: e.target.value })}
             required
           />
+
+          {formError && (
+            <p className="text-red-600 dark:text-red-400 text-sm text-center -mt-2">
+              {formError}
+            </p>
+          )}
+
           <button
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded"
@@ -57,4 +70,3 @@ export default function Register() {
     </div>
   );
 }
-

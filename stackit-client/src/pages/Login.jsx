@@ -6,16 +6,21 @@ import axios from "../utils/axios";
 export default function Login() {
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
+  const [formError, setFormError] = useState(""); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setFormError(""); 
+
     try {
       const res = await axios.post("/auth/login", form);
       localStorage.setItem("token", res.data.token);
       toast.success("Login successful!");
       navigate("/");
     } catch (err) {
-      toast.error(err.response?.data?.message || "Login failed");
+      const msg = err.response?.data?.message || "Login failed";
+      setFormError(msg);
+      toast.error(msg);
     }
   };
 
@@ -48,6 +53,12 @@ export default function Login() {
               required
             />
           </div>
+
+          {formError && (
+            <p className="text-red-600 dark:text-red-400 text-sm text-center -mt-2">
+              {formError}
+            </p>
+          )}
 
           <button
             type="submit"
