@@ -10,19 +10,25 @@ export const getAllQuestions = async (req, res) => {
 };
 
 export const askQuestion = async (req, res) => {
-  const { title, description, tags } = req.body;
-
   try {
+    const { title, description, tags } = req.body;
+    const userId = req.user._id;
+
+    if (!title || !description || !tags || tags.length === 0) {
+      return res.status(400).json({ message: "All fields are required." });
+    }
+
     const newQuestion = new Question({
       title,
       description,
       tags,
-      userId: req.user.userId, 
+      author: userId,
     });
 
-    const saved = await newQuestion.save();
-    res.status(201).json(saved);
+    await newQuestion.save();
+
+    res.status(201).json({ message: "Question posted successfully." });
   } catch (err) {
-    res.status(500).json({ message: "Failed to post question" });
+    res.status(500).json({ message: "Failed to post question." });
   }
 };
