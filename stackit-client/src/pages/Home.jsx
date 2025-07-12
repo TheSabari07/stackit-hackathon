@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "../utils/axios";
 
 export default function Home() {
   const [questions, setQuestions] = useState([]);
   const navigate = useNavigate();
-
   const isLoggedIn = !!localStorage.getItem("token");
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/questions")
+    axios.get("/questions")
       .then((res) => setQuestions(res.data))
       .catch((err) => console.error("Error fetching questions", err));
   }, []);
